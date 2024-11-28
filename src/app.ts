@@ -19,7 +19,7 @@ app.use(
 );
 
 // Application routes
-app.use('/api', router);
+app.use('/', router);
 
 // Global error handler
 app.use(globalErrorHandler);

@@ -2,12 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { NextFunction, Request, Response } from 'express';
-const httpStatus = require("http-status");
-
+import { StatusCodes } from 'http-status-codes';
 const notFound = (req: Request, res: Response, next: NextFunction) => {
-  return res.status(httpStatus.NOT_FOUND).json({
+  return res.status(StatusCodes.NOT_FOUND).json({
     success: false,
-    statusCode: httpStatus.NOT_FOUND,
+    statusCode: StatusCodes.NOT_FOUND,
     message: 'Not Found',
   });
 };
