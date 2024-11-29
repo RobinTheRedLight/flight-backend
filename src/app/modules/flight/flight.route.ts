@@ -7,25 +7,21 @@ import { USER_ROLE } from '../user/user.constant';
 
 const router = express.Router();
 
-router.get('/flights', FlightControllers.getAllFlights);
-router.get('/flights/:id', FlightControllers.getFlightDetails);
+router.get('/', FlightControllers.getAllFlights);
+router.get('/:id', FlightControllers.getFlightDetails);
 
 router.post(
-  '/flights',
+  '/',
   auth(USER_ROLE.admin),
   validateRequest(FlightValidation.flightCreationSchema),
   FlightControllers.addFlight,
 );
 router.put(
-  '/flights/:id',
+  '/:id',
   auth(USER_ROLE.admin),
   validateRequest(FlightValidation.flightUpdateSchema),
   FlightControllers.updateFlight,
 );
-router.delete(
-  '/flights/:id',
-  auth(USER_ROLE.admin),
-  FlightControllers.deleteFlight,
-);
+router.delete('/:id', auth(USER_ROLE.admin), FlightControllers.deleteFlight);
 
 export const FlightRoutes = router;
