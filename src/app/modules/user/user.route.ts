@@ -7,14 +7,16 @@ import { USER_ROLE } from './user.constant';
 
 const router = express.Router();
 
-// Route to get the logged-in user's profile
+router.get('/', auth(USER_ROLE.admin), UserControllers.getAllUsers);
+
+router.get('/:id', auth(USER_ROLE.admin), UserControllers.getSingleUser);
+
 router.get(
   '/me',
   auth(USER_ROLE.admin, USER_ROLE.user),
   UserControllers.getUser,
 );
 
-// Route for updating the logged-in user's own profile
 router.put(
   '/me',
   auth(USER_ROLE.admin, USER_ROLE.user),

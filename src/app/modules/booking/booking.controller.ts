@@ -5,9 +5,7 @@ import sendResponse from '../../utils/sendResponse';
 import { BookingServices } from './booking.service';
 
 const createBooking = catchAsync(async (req, res) => {
-  const { userId } = req.user; 
-  const bookingData = { ...req.body, userId }; 
-
+  const bookingData = req.body;
   const result = await BookingServices.createBooking(bookingData);
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,

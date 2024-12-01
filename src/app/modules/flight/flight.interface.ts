@@ -3,7 +3,7 @@ export type TFlight = {
   airline: string;
   origin: string;
   destination: string;
-  date: Date;
+  date: string;
   time: string;
   price: number;
   availableSeats: number;

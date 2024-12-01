@@ -22,6 +22,27 @@ const createUser = catchAsync(async (req, res) => {
   });
 });
 
+const getAllUsers = catchAsync(async (req, res) => {
+  const result = await UserServices.getAllUsersFromDB();
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Users retrieved successfully',
+    data: result,
+  });
+});
+
+const getSingleUser = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const result = await UserServices.getUserByIdFromDB(id);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'User retrieved successfully',
+    data: result,
+  });
+});
+
 const getUser = catchAsync(async (req, res) => {
   let token: any = req.headers.authorization;
   const splitToken = token.split(' ');
@@ -60,4 +81,6 @@ export const UserControllers = {
   createUser,
   getUser,
   updateUser,
+  getAllUsers,
+  getSingleUser,
 };

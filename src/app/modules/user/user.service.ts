@@ -6,8 +6,17 @@ import { User } from './user.model';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
 
+const getAllUsersFromDB = async () => {
+  const users = await User.find();
+  return users;
+};
+
+const getUserByIdFromDB = async (id: string) => {
+  const user = await User.findById(id);
+  return user;
+};
+
 const createUserIntoDB = async (payload: TUser) => {
-  // Create a user
   const newUser = await User.create(payload);
   return newUser;
 };
@@ -58,4 +67,6 @@ export const UserServices = {
   createUserIntoDB,
   getUserFromDB,
   updateUserFromDB,
+  getAllUsersFromDB,
+  getUserByIdFromDB,
 };

@@ -20,7 +20,7 @@ const FlightSchema = new Schema<TFlight>({
     required: true,
   },
   date: {
-    type: Date,
+    type: String,
     required: true,
   },
   time: {
