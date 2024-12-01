@@ -43,31 +43,13 @@ const getSingleUser = catchAsync(async (req, res) => {
   });
 });
 
-const getUser = catchAsync(async (req, res) => {
-  let token: any = req.headers.authorization;
-  const splitToken = token.split(' ');
-  token = splitToken[1];
-  const result = await UserServices.getUserFromDB(token);
-
-  const { _doc } = result as any;
-  const { password, ...userWithoutPassword } = _doc;
-
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'User profile retrieved successfully',
-    data: userWithoutPassword,
-  });
-});
-
 const updateUser = catchAsync(async (req, res) => {
-  let token: any = req.headers.authorization;
-  const splitToken = token.split(' ');
-  token = splitToken[1];
+  const id = req.params.id;
   const updateData = req.body;
-  const result = await UserServices.updateUserFromDB({ updateData, token });
+  const result = await UserServices.updateUserFromDB({ updateData, id });
   const { _doc } = result as any;
   const { password, createdAt, updatedAt, __v, ...userWithoutPassword } = _doc;
+  console.log(userWithoutPassword);
 
   sendResponse(res, {
     success: true,
@@ -79,7 +61,6 @@ const updateUser = catchAsync(async (req, res) => {
 
 export const UserControllers = {
   createUser,
-  getUser,
   updateUser,
   getAllUsers,
   getSingleUser,

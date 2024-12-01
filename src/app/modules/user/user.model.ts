@@ -1,5 +1,3 @@
-// user.model.ts
-
 import bcrypt from 'bcrypt';
 import { Schema, model } from 'mongoose';
 import config from '../../config';
@@ -62,12 +60,12 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// Static method to check if user exists by email
+
 userSchema.statics.isUserExistsByEmail = async function (email: string) {
   return await this.findOne({ email: email }).select('+password');
 };
 
-// Static method to compare passwords
+
 userSchema.statics.isPasswordMatched = async function (
   plainTextPassword: string,
   hashedPassword: string,

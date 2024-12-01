@@ -21,43 +21,14 @@ const createUserIntoDB = async (payload: TUser) => {
   return newUser;
 };
 
-const getUserFromDB = async (token: string) => {
-  if (!token) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'You are not authorized!');
-  }
-
-  const decoded = jwt.verify(
-    token,
-    config.jwt_access_secret as string,
-  ) as JwtPayload;
-  const { userEmail } = decoded;
-
-  const user = await User.isUserExistsByEmail(userEmail);
-  if (!user) {
-    throw new AppError(StatusCodes.NOT_FOUND, 'User not found!');
-  }
-
-  return user;
-};
-
 const updateUserFromDB = async (payload: any) => {
-  const { token, updateData } = payload;
-  if (!token) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'You are not authorized!');
-  }
-
-  const decoded = jwt.verify(
-    token,
-    config.jwt_access_secret as string,
-  ) as JwtPayload;
-  const { userEmail } = decoded;
-
-  const user = await User.isUserExistsByEmail(userEmail);
+  const { id, updateData } = payload;
+  const user = await User.findById(id);
   if (!user) {
     throw new AppError(StatusCodes.NOT_FOUND, 'User not found!');
   }
 
-  const result = await User.findOneAndUpdate({ email: userEmail }, updateData, {
+  const result = await User.findOneAndUpdate({ _id: id }, updateData, {
     new: true,
   });
   return result;
@@ -65,7 +36,6 @@ const updateUserFromDB = async (payload: any) => {
 
 export const UserServices = {
   createUserIntoDB,
-  getUserFromDB,
   updateUserFromDB,
   getAllUsersFromDB,
   getUserByIdFromDB,
